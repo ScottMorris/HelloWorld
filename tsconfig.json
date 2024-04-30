@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"target": "ESNext", // Compile to ECMAScript 2015 (ES6)
+		"module": "ESNext", // Use CommonJS module system
+		"strict": true, // Enable stricter type checking
+		"sourceMap": true, // Generate source maps for debugging
+		"outDir": "dist", // Output compiled JavaScript to "dist" folder (optional)
+		"lib": ["ESNext", "dom", "dom.iterable"], // Include type definitions for DOM and iterables
+		"allowJs": true // Allow compilation of JavaScript files (optional)
+	},
+	"include": ["src/**/*.ts"] // Include all TypeScript files in the "src" directory and subdirectories
+}
