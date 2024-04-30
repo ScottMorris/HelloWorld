@@ -1,0 +1,36 @@
+name: Test Project
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: number
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ inputs.node-version }} # Pass this in as a parameter
+        uses: actions/setup-node@v4 # Maybe v4?
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts # Artifact name (must match upload name)
+          path: ./dist
+
+      # - name: Use downloaded artifacts
+      #   run: |
+      #     # Access downloaded artifacts in the workspace at `/github/workflow/`
+      #     # You can use them in your test scripts here (e.g., copy, unpack, etc.)
+      #     cp -r /github/workflow/build-artifacts/ .
+
+      - run: pwd
+      - run: ls -la
+      - name: Run app # tests
+        run: npm run start

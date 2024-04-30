@@ -1,0 +1,27 @@
+# Environment Vars: Can't be passed to `with` statements: https://github.com/orgs/community/discussions/26671
+
+name: CI/CD Pipeline
+
+# on:
+#   pull_request: # Trigger on pull request events
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+# env:
+#   NODE_VERSION: 20
+
+jobs:
+  build: # Job defined in a separate file (build.yml)
+    needs: [] # No dependencies on other jobs
+    uses: ./.github/workflows/build.yml # Path to the reusable workflow file
+    with:
+      node-version: 20
+
+  test: # Job defined in a separate file (test.yml)
+    needs: [build] # Needs successful completion of 'build' job
+    uses: ./.github/workflows/test.yml
+    with:
+      node-version: 20
