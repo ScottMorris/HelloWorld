@@ -1,4 +1,7 @@
-name: Build Project
+# Notes
+# Look into node_module caching between steps
+
+name: Build
 
 on:
   workflow_call:
@@ -28,4 +31,37 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts # Artifact name
+          compression-level: 9 # Best compression
           path: dist/ # Path to the artifacts directory
+
+  build-documentation-app:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts # Artifact name (must match upload name)
+          path: ./dist
+
+      # - name: Install dependencies
+      #   run: npm ci
+
+      - name: Build the project
+        run: npm run build-docs --if-present
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-docs # Artifact name
+          compression-level: 9 # Best compression
+          path: | # Path to the artifacts directory
+            docs/ 
+            !**/node_modules/**/*
