@@ -14,12 +14,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js ${{ inputs.node-version }}
-        uses: actions/setup-node@v4 # Maybe v4?
-        with:
+      - uses: ./.github/workflows/common.yml
+        with: 
           node-version: ${{ inputs.node-version }}
+
+      # - uses: actions/checkout@v4
+
+      # - name: Use Node.js ${{ inputs.node-version }}
+      #   uses: actions/setup-node@v4 # Maybe v4?
+      #   with:
+      #     node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
         run: npm ci
