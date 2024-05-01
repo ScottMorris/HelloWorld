@@ -1,0 +1,19 @@
+name: Common
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: number
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ inputs.node-version }} # Pass this in as a parameter
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}

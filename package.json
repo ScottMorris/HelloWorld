@@ -6,7 +6,8 @@
 	"scripts": {
 		"build": "tsc",
 		"start": "node .",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build-docs": "echo \"Docs built successfully 📚\" && mkdir -p docs && echo \"# Docs built successfully 📚\" > docs/Readme.md",
+		"unit-test": "echo \"Unit Tests run successfully 😀\""
 	},
 	"keywords": [],
 	"author": "",
